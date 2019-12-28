@@ -22,16 +22,11 @@ mongoose.set('useCreateIndex', true);
 // SCHEMA SETUP
 var campgroundSchema = new mongoose.Schema({
 	name: String,
-	image: String
+	image: String,
+	description: String
 });
 
 var Campground = mongoose.model('Campground', campgroundSchema);
-
-// Campground.create({
-// 	name: 'Salmon Creek',
-// 	image:
-// 		'https://www.photosforclass.com/download/pixabay-1846142?webUrl=https%3A%2F%2Fpixabay.com%2Fget%2F57e8d1454b56ae14f6da8c7dda793f7f1636dfe2564c704c72287fd79245c159_960.jpg&user=Pexels'
-// });
 
 // Landing Page
 app.get('/', function(req, res) {
@@ -39,36 +34,51 @@ app.get('/', function(req, res) {
 });
 
 // Get all campgrounds from db
-app.get('/campgrounds', function(req, res) {
+app.get('/index', function(req, res) {
 	Campground.find({}, (err, allCampgrounds) => {
 		if (err) {
 			console.log(err);
 		} else {
-			res.render('campgrounds', { campgrounds: allCampgrounds });
+			res.render('index', { campgrounds: allCampgrounds });
 		}
 	});
 });
 
 // Create new campground
-app.get('/campgrounds/new', function(req, res) {
+app.get('/index/new', function(req, res) {
 	res.render('new.ejs');
 });
 
-app.post('/campgrounds', function(req, res) {
+app.post('/index', function(req, res) {
 	var name = req.body.name;
 	var image = req.body.image;
-	var newCampground = { name: name, image: image };
+	var description = req.body.description;
+	var newCampground = { name: name, image: image, description: description };
 	// Create a new campground and save to db
 	Campground.create(newCampground, (err, newlyCreated) => {
 		if (err) {
 			console.log(err);
 		} else {
-			res.redirect('/campgrounds');
+			res.redirect('/index');
+		}
+	});
+});
+
+// Shows more info about one campground
+app.get('/index/:id', (req, res) => {
+	// Find campground with unique ID
+	var id = req.params.id;
+	Campground.findById(id, (err, foundCampground) => {
+		if (err) {
+			console.log(err);
+		} else {
+			// Render show template of uniqe ID
+			res.render('show', { campground: foundCampground });
 		}
 	});
 });
 
 // Server listener
-app.listen(3000, function() {
+app.listen(3000, () => {
 	console.log('YelpCamp server has started!');
 });
