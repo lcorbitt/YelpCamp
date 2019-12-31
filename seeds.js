@@ -34,13 +34,14 @@ async function seedDB() {
 			let campground = await Campground.create(seed);
 			console.log('Camground created');
 			let comment = await Comment.create({
-				text: 'This seeded comment is great.',
+				body: 'This seeded comment is great.',
 				author: 'Homer Tester'
 			});
 			console.log('Comment created');
 			campground.comments.push(comment);
 			campground.save();
 			console.log('Comment added to campground');
+			console.log('=====================================================');
 		}
 	} catch (err) {
 		console.log('THERE WAS AN ERROR: ', err);

@@ -1,12 +1,12 @@
 
-<%- include('partials/header') %>
+<%- include('../partials/header') %>
 <div class="container">
     <header class="jumbotron">
         <div class="container">
             <h1>Campgrounds</h1>
             <br>
             <p>
-                <a class="btn btn-primary btn-md" href="index/new">Add New Campground</a>
+                <a class="btn btn-primary btn-md" href="campgrounds/new">Add New Campground</a>
             </p>
         </div>
     </header>
@@ -24,12 +24,12 @@
                 <div class ="thumbnail">
                     <img src="<%= campground.image %>">
                     <div class="caption">
-                        <h4><a href="/index/<%= campground._id %>"><%= campground.name %></h4></a>
+                        <h4><a href="/campgrounds/<%= campground._id %>"><%= campground.name %></h4></a>
                     </div>
                 </div>
             </div>
         <% }) %>
     </div>
 </div>
-<%- include('partials/footer') %>
+<%- include('../partials/footer') %>
 
