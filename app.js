@@ -1,7 +1,12 @@
-var express = require('express');
-var mongoose = require('mongoose');
-var app = express();
-var bodyParser = require('body-parser');
+var express = require('express'),
+	mongoose = require('mongoose'),
+	app = express(),
+	bodyParser = require('body-parser'),
+	// MODULES
+	Campground = require('./models/campground'),
+	User = require('./models/user');
+
+// USE
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
 
@@ -19,18 +24,11 @@ mongoose
 mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
 
-// SCHEMA SETUP
-var campgroundSchema = new mongoose.Schema({
-	name: String,
-	image: String,
-	description: String
-});
-
-var Campground = mongoose.model('Campground', campgroundSchema);
+// RESTful ROUTES
 
 // Landing Page
 app.get('/', function(req, res) {
-	res.render('landing');
+	res.redirect('index');
 });
 
 // Get all campgrounds from db
