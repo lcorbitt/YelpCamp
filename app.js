@@ -4,11 +4,17 @@ var express = require('express'),
 	bodyParser = require('body-parser'),
 	// MODULES
 	Campground = require('./models/campground'),
-	User = require('./models/user');
+	Comment = require('./models/comment'),
+	User = require('./models/user'),
+	// SEED DB
+	seedDB = require('./seeds');
 
 // USE
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
+
+// SEED DB
+seedDB();
 
 // DB SETUP
 mongoose
@@ -42,11 +48,12 @@ app.get('/index', function(req, res) {
 	});
 });
 
-// Create new campground
+// Show form to create new campground
 app.get('/index/new', function(req, res) {
 	res.render('new.ejs');
 });
 
+// POST request to create a new campground
 app.post('/index', function(req, res) {
 	var name = req.body.name;
 	var image = req.body.image;
@@ -62,17 +69,13 @@ app.post('/index', function(req, res) {
 	});
 });
 
-// Shows more info about one campground
+// Find campground with unique ID
 app.get('/index/:id', (req, res) => {
-	// Find campground with unique ID
 	var id = req.params.id;
-	Campground.findById(id, (err, foundCampground) => {
-		if (err) {
-			console.log(err);
-		} else {
-			// Render show template of uniqe ID
-			res.render('show', { campground: foundCampground });
-		}
+	Campground.findById(id).populate('comments').exec((err, foundCampground) => {
+		err ? console.log(err) : console.log(foundCampground.comments[0].text);
+
+		res.render('show', { campground: foundCampground });
 	});
 });
 

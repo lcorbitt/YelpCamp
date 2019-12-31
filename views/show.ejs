@@ -4,6 +4,9 @@
         <h1><%= campground.name %></h1> 
         <p><%= campground.description %></p>
         <img src="<%= campground.image %>">
+        <% campground.comments.forEach((comment) => { %>
+            <p><%= comment.author %> - <%= comment.text %></p>
+        <% }) %>
         <a href="/index">Back</a>
     </div>
 </div>
