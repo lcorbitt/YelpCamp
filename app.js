@@ -12,6 +12,8 @@ var express = require('express'),
 // CONFIG
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
+app.use(express.static(__dirname + '/public'));
+console.log(__dirname);
 
 // DB SETUP
 mongoose
@@ -102,7 +104,7 @@ app.post('/campgrounds/:id/comments', (req, res) => {
 		err
 			? console.log(err)
 			: Comment.create(req.body.comment, (err, comment) => {
-					err ? console.log(err) : foundCampground.comments.push(comment);
+					err ? console.log(err) : foundCampground.comments.unshift(comment);
 					foundCampground.save();
 					res.redirect('/campgrounds/' + foundCampground._id);
 				});
