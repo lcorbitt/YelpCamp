@@ -1,10 +1,10 @@
 var express = require('express'),
-	router = express.Router(),
+	router = express.Router({ mergeParams: true }),
 	Campground = require('../models/campground'),
 	Comment = require('../models/comment');
 
 // NEW - Display form to create new comment
-router.get('/campgrounds/:id/comments/new', isLoggedIn, (req, res) => {
+router.get('/new', isLoggedIn, (req, res) => {
 	var id = req.params.id;
 	Campground.findById(id).populate('comments').exec((err, foundCampground) => {
 		err ? console.log(err) : res.render('comments/new', { campground: foundCampground });
@@ -12,7 +12,7 @@ router.get('/campgrounds/:id/comments/new', isLoggedIn, (req, res) => {
 });
 
 // CREATE - POST request to create a new comment
-router.post('/campgrounds/:id/comments', isLoggedIn, (req, res) => {
+router.post('/', isLoggedIn, (req, res) => {
 	var id = req.params.id;
 	Campground.findById(id, (err, foundCampground) => {
 		err

@@ -39,6 +39,11 @@ router.post(
 	(req, res) => {}
 );
 
+// INDEX - Landing Page
+router.get('/', function(req, res) {
+	res.redirect('../campgrounds');
+});
+
 // HANDLE USER LOGOUT
 router.get('/logout', (req, res) => {
 	req.logout();

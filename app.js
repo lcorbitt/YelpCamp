@@ -61,21 +61,14 @@ app.use((req, res, next) => {
 	next();
 });
 
-// =========================
 // CAMPGROUND RESTful ROUTES
-// =========================
+app.use('/campgrounds', campgroundRoutes);
 
-// ======================
 // COMMENT RESTful ROUTES
-// ======================
+app.use('/campgrounds/:id/comments', commentRoutes);
 
-// ======================
 // AUTH ROUTES
-// ======================
-
-app.use(indexRoutes);
-app.use(campgroundRoutes);
-app.use(commentRoutes);
+app.use('/', indexRoutes);
 
 // isLoggedIn middleware
 function isLoggedIn(req, res, next) {

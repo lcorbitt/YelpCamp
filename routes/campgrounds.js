@@ -3,12 +3,12 @@ var express = require('express'),
 	Campground = require('../models/campground');
 
 // INDEX - Landing Page
-router.get('/', function(req, res) {
-	res.redirect('../campgrounds');
-});
+// router.get('/', function(req, res) {
+// 	res.redirect('../campgrounds');
+// });
 
 // INDEX - Get all campgrounds from database
-router.get('/campgrounds', function(req, res) {
+router.get('/', function(req, res) {
 	Campground.find({}, (err, allCampgrounds) => {
 		if (err) {
 			console.log(err);
@@ -22,12 +22,12 @@ router.get('/campgrounds', function(req, res) {
 });
 
 // NEW - Display form to create new campground
-router.get('/campgrounds/new', function(req, res) {
+router.get('/new', function(req, res) {
 	res.render('campgrounds/new');
 });
 
 // CREATE - POST request to create a new campground
-router.post('/campgrounds', function(req, res) {
+router.post('/', function(req, res) {
 	// Get data from form and add to campgrounds array
 	var name = req.body.name;
 	var image = req.body.image;
@@ -44,7 +44,7 @@ router.post('/campgrounds', function(req, res) {
 });
 
 // SHOW - Find campground with unique ID
-router.get('/campgrounds/:id', (req, res) => {
+router.get('/:id', (req, res) => {
 	var id = req.params.id;
 	Campground.findById(id).populate('comments').exec((err, foundCampground) => {
 		err ? console.log(err) : res.render('campgrounds/show', { campground: foundCampground });
