@@ -12,22 +12,25 @@
     <link rel="stylesheet" href="/stylesheets/app.css">
 </head>
 <body>
-<div class="container">
+<!-- <div class="container"> -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="/">YelpCamp</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse float-right" id="navbarNavAltMarkup">
-          <div class="navbar-nav">
-            <a class="nav-item nav-link" href="/sign-up">Sign Up</a>
-            <a class="nav-item nav-link" href="/login">Log In</a>
-            <a class="nav-item nav-link" href="/logout">Log Out</a>
-
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div class="navbar-nav ml-auto">
+            <% if(!currentUser){ %>
+              <a class="nav-item nav-link" href="/sign-up">Sign Up</a>
+              <a class="nav-item nav-link" href="/login">Log In</a>
+           <% } else{ %>
+              <a class="nav-item nav-link" href="/logout">Log Out</a>
+              <li class="nav-item nav-link">Hello <%= currentUser.username %></li>
+            <% } %>
           </div>
         </div>
       </nav>
-</div>
+<!-- </div> -->
 
 
 
