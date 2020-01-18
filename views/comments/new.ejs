@@ -4,7 +4,7 @@
         <h1>Add New Comment to <%= campground.name %> </h1>
         <div style="margin: 30px auto;">
             <form action="/campgrounds/<%= campground._id %>/comments" method="POST">
-                <input type="hidden" id="commentAuthor" name="comment[author]" value="<%= currentUser.username %>">
+                <input type="hidden" id="commentAuthor" name="comment[author][username]" value="<%= currentUser.username %>">
                 <div>
                     <p>Author: <%= currentUser.username %></p>
                 </div>

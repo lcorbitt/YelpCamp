@@ -7,9 +7,9 @@ var express = require('express'),
 	// MODULES
 	Campground = require('./models/campground'),
 	Comment = require('./models/comment'),
-	User = require('./models/user'),
-	// SEED DB
-	seedDB = require('./seeds');
+	User = require('./models/user');
+// SEED DB
+// seedDB = require('./seeds');
 var campgroundRoutes = require('./routes/campgrounds'),
 	commentRoutes = require('./routes/comments'),
 	indexRoutes = require('./routes/index');
@@ -36,7 +36,7 @@ mongoose.set('useCreateIndex', true);
 // =================
 // SEED THE DATABASE
 // =================
-seedDB();
+// seedDB();
 
 // =================
 // PASSPORT CONFIGURATION

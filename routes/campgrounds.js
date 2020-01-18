@@ -2,11 +2,6 @@ var express = require('express'),
 	router = express.Router(),
 	Campground = require('../models/campground');
 
-// INDEX - Landing Page
-// router.get('/', function(req, res) {
-// 	res.redirect('../campgrounds');
-// });
-
 // INDEX - Get all campgrounds from database
 router.get('/', function(req, res) {
 	Campground.find({}, (err, allCampgrounds) => {
@@ -22,7 +17,7 @@ router.get('/', function(req, res) {
 });
 
 // NEW - Display form to create new campground
-router.get('/new', function(req, res) {
+router.get('/new', isLoggedIn, function(req, res) {
 	res.render('campgrounds/new');
 });
 
@@ -32,7 +27,11 @@ router.post('/', function(req, res) {
 	var name = req.body.name;
 	var image = req.body.image;
 	var description = req.body.description;
-	var newCampground = { name: name, image: image, description: description };
+	var author = {
+		id: req.user._id,
+		username: req.user.username
+	};
+	var newCampground = { name: name, image: image, description: description, author: author };
 	// Create a new campground and save to db
 	Campground.create(newCampground, (err, newlyCreated) => {
 		if (err) {
@@ -50,6 +49,14 @@ router.get('/:id', (req, res) => {
 		err ? console.log(err) : res.render('campgrounds/show', { campground: foundCampground });
 	});
 });
+
+// isLoggedIn middleware
+function isLoggedIn(req, res, next) {
+	if (req.isAuthenticated()) {
+		return next();
+	}
+	res.redirect('/login');
+}
 
 // What's being exported from this file
 module.exports = router;
