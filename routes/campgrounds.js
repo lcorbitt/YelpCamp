@@ -80,7 +80,7 @@ router.delete('/:id', checkCampgroundOwnership, (req, res) => {
 	});
 });
 
-// isLoggedIn middleware
+// middleware
 function isLoggedIn(req, res, next) {
 	if (req.isAuthenticated()) {
 		return next();
